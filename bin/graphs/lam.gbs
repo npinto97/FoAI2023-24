@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<domain name="lam">
+	<imports>
+		<import schema = "src\graphs\general"/>
+	</imports>
+	<user-types>
+		<type name="periodicity" datatype="select"> <!-- see education ontology ! -->
+			<value name="Triennal"/>
+			<value name="Biennial"/>
+			<value name="Annual"/>
+			<value name="Semiannual"/>
+			<value name="ThreeTimesAYear"/>
+			<value name="Quarterly"/>
+			<value name="Bimonthly"/>
+			<value name="Monthly"/>
+			<value name="Semimonthly"/>
+			<value name="Biweekly"/>
+			<value name="ThreeTimesAMonth"/>
+			<value name="Weekly"/>
+			<value name="Semiweekly"/>
+			<value name="ThreeTimesAWeek"/>
+			<value name="Daily"/>
+			<value name="Continuous"/>
+			<value name="Irregular"/>
+		</type>
+	</user-types>
+	<entities>
+		<entity name="Artifact"> <!-- fondere con Document?-->
+			<attribute name="creation" mandatory="false" datatype="date"/>
+			<attribute name="issued" mandatory="false" datatype="date"/>
+			<attribute name="submitted" mandatory="false" datatype="date"/>
+			<attribute name="accepted" mandatory="false" datatype="date"/>
+		</entity>
+		<entity name="Citation">
+			<attribute name="text" mandatory="true" datatype="string"/>
+			<attribute name="description" mandatory="false" datatype="entity" target="Document"/>
+		</entity>
+		<entity name="Collection">
+			<attribute name="accrualPeriodicity" mandatory="false" datatype="periodicity"/>
+			<attribute name="accrualPolicy" mandatory="false" datatype="select">
+				<value name="Closed"/>
+				<value name="Passive"/>
+				<value name="Active"/>
+				<value name="Partial"/>
+			</attribute>
+			<entity name="Corpus"/>
+			<entity name="Series"/>
+		</entity>
+		<entity name="Document"> <!-- fondere con Document in "CulturalObject"? -->
+			<attribute name="size" mandatory="false" datatype="text" notes="IFLA"/>
+			<attribute name="useRights" mandatory="false" datatype="text" notes="IFLA"/>
+			<attribute name="title" mandatory="true" datatype="string" notes="IFLA"/>
+			<attribute name="additionalInfoTitle" mandatory="false" datatype="text" notes="IFLA"/>
+			<attribute name="edition" mandatory="false" datatype="string" notes="IFLA"/>
+			<attribute name="place" mandatory="false" datatype="entity" target="Place" notes="IFLA"/>
+			<attribute name="date" mandatory="false" datatype="entity" target="TemporalSpecification" notes="IFLA"/>
+			<attribute name="captureMode" mandatory="true" datatype="string" notes="IFLA"/>
+			<attribute name="size" mandatory="false" datatype="text" notes="IFLA"/>
+			<attribute name="id" mandatory="false" datatype="string" notes="IFLA"/>
+			<attribute name="sourceForAuthorization" mandatory="false" datatype="string" notes="IFLA"/>
+			<attribute name="termsOfAvailability" mandatory="false" datatype="text" notes="IFLA"/>
+			<attribute name="accessRestrictions" mandatory="false" datatype="text" notes="IFLA"/>
+			<attribute name="generation" mandatory="false" datatype="integer" notes="IFLA"/>
+			<!-- 
+			<attribute name="description" mandatory="false" datatype="text"/>
+			<attribute name="abstract" mandatory="false" datatype="text"/>
+			<attribute name="tableOfContents" mandatory="false" datatype="text"/>
+			<attribute name="copyright" mandatory="false" datatype="date"/>
+			<attribute name="format" mandatory="false" datatype="string"/>
+			<attribute name="extent" mandatory="false" datatype="string"/>
+			<attribute name="medium" mandatory="false" datatype="string"/>
+			<attribute name="length" mandatory="false" datatype="string"/>
+			<attribute name="creation" mandatory="false" datatype="date"/>
+			<attribute name="issued" mandatory="false" datatype="date"/>
+			<attribute name="submitted" mandatory="false" datatype="date"/>
+			<attribute name="accepted" mandatory="false" datatype="date"/>
+			<attribute name="originalPrice" mandatory="false" datatype="real"/>
+			<attribute name="rightsStatement" mandatory="false" datatype="text"/>
+			<attribute name="accessRights" mandatory="false" datatype="text"/>
+			<attribute name="license" mandatory="false" datatype="entity" target="Edition"/>
+			-->
+			<entity name="Audio">
+				<attribute name="playingSpeed" datatype="string" notes="IFLA"/>
+				<attribute name="grooveWidth" datatype="string" notes="IFLA"/>
+				<attribute name="kindOfCutting" datatype="string" notes="IFLA"/>
+				<attribute name="tapeConfiguration" datatype="string" notes="IFLA"/>
+				<attribute name="kindOfSound" datatype="string" notes="IFLA"/>
+				<attribute name="specialReproduction" datatype="string" notes="IFLA"/>
+				<entity name="Music"/>
+				<entity name="Noise"/>
+				<entity name="Song"/>
+				<entity name="Speech"/>
+			</entity>
+			<entity name="Printable">
+				<entity name="Book">
+					<attribute name="typeface" datatype="string" notes="IFLA"/>
+					<attribute name="typeSize" datatype="string" notes="IFLA"/>
+				</entity>
+				<entity name="HandPrintedBook" notes="IFLA">
+					<attribute name="foliation" datatype="string" notes="IFLA"/>
+					<attribute name="collation" datatype="string" notes="IFLA"/>
+				</entity>
+				<entity name="Booklet"/>
+				<entity name="Card"/>
+				<entity name="Cartography">
+					<attribute name="scale" datatype="string"/>
+				</entity>
+				<entity name="DesignDiagram"/>
+				<entity name="Leaflet"/>
+				<entity name="Letter"/>
+				<entity name="Magazine"/>
+				<entity name="Manual"/>
+				<entity name="MusicalScore">
+					<attribute name="key" datatype="string"/>
+				</entity>
+				<entity name="Picture"/>
+				<entity name="Postcard"/>
+				<entity name="Poster"/>
+				<entity name="TextDocument"/>
+			</entity>
+			<entity name="Video">
+				<entity name="Microform"/>
+				<entity name="Projection"/>
+			</entity>
+			<entity name="Visual">
+				<!-- <entity name="Documentary"/> -->
+				<!--<entity name="Movie"/> -->
+			</entity>
+		</entity>
+		<entity name="Edition"> <!-- Expression ? in IntellectualWork? -->
+			<attribute name="title" mandatory="true" datatype="string"/>
+			<attribute name="id" mandatory="false" datatype="string"/>
+			<attribute name="edition" mandatory="false" datatype="string"/>
+			<attribute name="copyright" mandatory="false" datatype="date"/>
+			<attribute name="length" mandatory="false" datatype="string"/>
+			<attribute name="creation" mandatory="false" datatype="date"/>
+			<attribute name="issued" mandatory="false" datatype="date"/>
+			<attribute name="submitted" mandatory="false" datatype="date"/>
+			<attribute name="accepted" mandatory="false" datatype="date"/>
+			<!-- serve la stessa tassonomia di Document per aggiungere ulteriori proprieta' specifiche dell'edizione? -->
+		</entity>
+		<entity name="IntellectualWork" description="The result of an intellectual activity">
+			<entity name="WorkOfArt">
+				<attribute name="name" mandatory="true" datatype="string"/>
+				<attribute name="description" mandatory="false" datatype="text"/> <!-- serve? -->
+				<attribute name="role" mandatory="false" datatype="string"/>
+				<attribute name="creation" mandatory="false" datatype="date"/>
+				<attribute name="patent" mandatory="false" datatype="string"/>
+				<!-- fin qui presi da IntellectualWork -->
+				<attribute name="title" mandatory="false" datatype="string"/>
+				<attribute name="id" mandatory="false" datatype="string"/> <!-- relazione con Nomen? -->
+				<attribute name="date" mandatory="false" distinguishing="true" datatype="date"/>
+				<attribute name="additionalFeatures" mandatory="false" datatype="text"/>
+				<attribute name="intendedTermination" mandatory="false" datatype="boolean"/>
+				<entity name="CartographicWork">
+					<attribute name="coordinates" mandatory="false" datatype="string"/>
+					<attribute name="equinox" mandatory="false" datatype="string"/>
+				</entity>
+				<entity name="Expression">
+					<attribute name="title" mandatory="true" datatype="string"/>
+					<attribute name="language" mandatory="false" datatype="string"/>
+					<attribute name="edition" mandatory="false" datatype="string"/>
+					<attribute name="copyright" mandatory="false" datatype="date"/>
+					<attribute name="length" mandatory="false" datatype="string"/>
+					<attribute name="date" mandatory="false" distinguishing="true" datatype="date"/> <!-- publicationDate -->
+					<attribute name="useRights" mandatory="false" datatype="text"/>
+				</entity>
+				<entity name="MusicalWork">
+					<attribute name="number" mandatory="false" datatype="string"/>
+					<attribute name="key" mandatory="false" datatype="string"/>
+				</entity>
+			</entity>
+			<entity name="PointOfInterest">
+				<attribute name="name" mandatory="true" datatype="string"/>
+				<attribute name="place" mandatory="false" display="true" datatype="entity" target="Place" />
+				<attribute name="description" mandatory="false" datatype="text"/>
+				<attribute name="address" mandatory="false" datatype="string"/>
+				<attribute name="phone" mandatory="false" datatype="string"/>
+				<attribute name="estimatedCost" mandatory="false" datatype="real"/>
+				<entity name="PlaceToVisit">
+					<attribute name="timeLimit" mandatory="false" datatype="integer"/>
+					<attribute name="requiresTicket" mandatory="false" datatype="boolean"/>
+					<entity name="Archive"/>
+					<entity name="Architecture"/>
+					<entity name="Church"/>
+					<entity name="Library"/>
+					<entity name="Monument"/>
+					<entity name="Museum"/>
+					<entity name="Palace"/>
+					<entity name="PanoramicView"/>
+					<entity name="Park"/>
+					<entity name="Ruin"/>
+					<entity name="Theater"/>
+				</entity>
+			</entity>
+		</entity>
+
+	</entities>
+	<relationships>
+		<relationship name="acquired" inverse="acquiredBy">
+			<reference subject="Organization" object="Organization"/>
+		</relationship>
+		<relationship name="aggregated" inverse="aggregatedBy">
+			<reference subject="Expression" object="Expression"/>
+		</relationship>
+		<relationship name="adopts" inverse="adoptedBy">
+			<reference subject="Artifact" object="Document"/> <!-- Standard -->
+			<reference subject="Country" object="Language"/>
+			<reference subject="Edition" object="Document"/> <!-- Standard -->
+			<reference subject="Edition" object="Language"/>
+			<reference subject="IntellectualWork" object="Document"/> <!-- Standard -->
+			<reference subject="IntellectualWork" object="Language"/>
+		</relationship>
+		<relationship name="available" inverse="availabilityOf"> <!-- dc -->
+			<reference subject="Artifact" object="TemporalSpecification"/>
+			<reference subject="Document" object="TemporalSpecification"/>
+			<reference subject="Edition" object="TemporalSpecification"/>
+			<reference subject="IntellectualWork" object="TemporalSpecification"/>
+			<reference subject="Item" object="TemporalSpecification"/>
+		</relationship>
+		<relationship name="belongsTo" inverse="includes">
+			<reference subject="Artifact" object="Collection"/>
+			<reference subject="Document" object="Collection"/>
+			<reference subject="Event" object="Collection"/>
+			<reference subject="Event" object="Collection"/>
+			<reference subject="IntellectualWork" object="Collection"/>
+			<reference subject="Item" object="Collection"/>
+			<reference subject="Person" object="Collection"/>
+			<reference subject="Place" object="Collection"/>
+			<reference subject="PointOfInterest" object="Collection"/>
+			<attribute name="number" mandatory="false" datatype="string"/>
+			<attribute name="quantity" mandatory="false" datatype="integer"/>
+			<attribute name="accrualMethod" mandatory="false" datatype="select">
+				<value name="Deposit"/>
+				<value name="Donation"/>
+				<value name="Purchase"/>
+				<value name="Loan"/>
+				<value name="License"/>
+				<value name="ItemCreation"/>
+			</attribute>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="branchOf" inverse="controls"> <!-- assorbire in partOf ? -->
+			<reference subject="Organization" object="Organization"/>
+		</relationship>
+		<relationship name="clones" inverse="clonedBy">
+			<reference subject="Artifact" object="Artifact"/>
+			<reference subject="Document" object="Document"/>
+		</relationship>
+		<relationship name="cites" inverse="citedIn"> <!-- ex concerns -->
+			<reference subject="Document" object="Artifact"/>
+			<reference subject="Document" object="Category"/>
+			<reference subject="Document" object="Document"/>
+			<reference subject="Document" object="Edition"/>
+			<reference subject="Document" object="IntellectualWork"/>
+			<reference subject="Document" object="Item"/>
+			<reference subject="Document" object="Organization"/>
+			<reference subject="Document" object="Person"/>
+			<reference subject="Document" object="Place"/>
+			<attribute name="position" mandatory="false" datatype="string"/>
+		</relationship>
+		<relationship name="concerns" inverse="concernedBy"> <!-- dc:coverage -->
+			<reference subject="Artifact" object="Category"/>
+			<reference subject="Artifact" object="Place"/>
+			<reference subject="Artifact" object="TemporalSpecification"/>
+			<reference subject="Document" object="Category"/>
+			<reference subject="Document" object="Place"/>
+			<reference subject="Document" object="TemporalSpecification"/>
+			<reference subject="Edition" object="Category"/>
+			<reference subject="Edition" object="Place"/>
+			<reference subject="Edition" object="TemporalSpecification"/>
+			<reference subject="IntellectualWork" object="Category"/>
+			<reference subject="IntellectualWork" object="Place"/>
+			<reference subject="IntellectualWork" object="TemporalSpecification"/>
+			<reference subject="Person" object="Category"/>
+			<reference subject="Person" object="Place"/>
+			<reference subject="Person" object="TemporalSpecification"/>
+			<reference subject="Place" object="Category"/>
+			<reference subject="Place" object="Place"/>
+			<reference subject="Place" object="TemporalSpecification"/>
+			<reference subject="PointOfInterest" object="Category"/>
+			<reference subject="PointOfInterest" object="Place"/>
+			<reference subject="PointOfInterest" object="TemporalSpecification"/>
+		</relationship>
+		<relationship name="contributorOf" inverse="hasContributor"> <!-- ex developed + produced -->
+			<reference subject="Organization" object="Artifact"/>
+			<reference subject="Organization" object="Document"/>
+			<reference subject="Organization" object="Edition"/>
+			<reference subject="Organization" object="IntellectualWork"/>
+			<reference subject="Organization" object="Item"/>
+			<reference subject="Organization" object="Collection"/>
+			<reference subject="Person" object="Artifact"/>
+			<reference subject="Person" object="Document"/>
+			<reference subject="Person" object="Edition"/>
+			<reference subject="Person" object="IntellectualWork"/>
+			<reference subject="Person" object="Item"/>
+			<attribute name="role" mandatory="false" datatype="string"/>
+			<attribute name="place" mandatory="false" datatype="entity" target="Place" />
+			<attribute name="order" mandatory="false" datatype="integer"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+			<attribute name="order" mandatory="false" datatype="integer"/>
+		</relationship>
+		<relationship name="derivesFrom" inverse="spawned">
+			<reference subject="IntellectualWork" object="IntellectualWork"/>
+		</relationship>
+		<relationship name="describes" inverse="describedBy">
+			<reference subject="Category" object="IntellectualWork"/>
+			<attribute name="aspect" mandatory="false" datatype="string"/> <!-- o select {Form,} ? -->
+		</relationship>
+		<relationship name="evaluated" inverse="evaluatedBy">
+			<reference subject="Person" object="Artifact"/>
+			<reference subject="Person" object="Document"/>
+			<reference subject="Person" object="Item"/>
+			<attribute name="value" mandatory="true" datatype="real"/>
+			<attribute name="type" mandatory="true" datatype="select">
+				<value name="purchase"/>
+				<value name="opinion"/>
+			</attribute>
+			<attribute name="evaluationDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="evolves" inverse="evolvedBy">
+			<reference subject="Artifact" object="Artifact"/>
+			<reference subject="Document" object="Document"/>
+			<reference subject="Edition" object="Edition"/>
+			<reference subject="IntellectualWork" object="IntellectualWork"/>
+		</relationship>
+		<relationship name="expresses" inverse="expressedBy">
+			<reference subject="Word" object="Category"/> <!-- Concept -->
+		</relationship>
+		<relationship name="hasAlternate" inverse="isAlternateOf">
+			<reference subject="Document" object="Document"/>
+		</relationship>
+		<relationship name="influenced" inverse="influencedBy">
+			<reference subject="IntellectualWork" object="IntellectualWork"/>
+		</relationship>
+		<relationship name="instanceOf" inverse="hasInstance">
+			<reference subject="Document" object="Edition"/>
+			<reference subject="Edition" object="IntellectualWork"/>
+			<reference subject="Item" object="Artifact"/>
+			<reference subject="Item" object="Document"/>
+			<reference subject="Place" object="Place"/>
+		</relationship>
+		<relationship name="isA" inverse="hasSubclass">
+			<reference subject="Category" object="Category"/>
+			<reference subject="Artifact" object="Artifact"/>
+		</relationship>
+		<relationship name="knows" inverse="knownBy">
+			<reference subject="Person" object="Person"/>
+			<attribute name="role" mandatory="false" datatype="string"/>
+		</relationship>
+		<relationship name="modified" inverse="modificationOf"> <!-- dc non chiaro, un qualcosa ha modificato un tempo? -->
+			<reference subject="Artifact" object="TemporalSpecification"/>
+			<reference subject="Document" object="TemporalSpecification"/>
+			<reference subject="Edition" object="TemporalSpecification"/>
+			<reference subject="IntellectualWork" object="TemporalSpecification"/>
+			<reference subject="Item" object="TemporalSpecification"/>
+		</relationship>
+		<relationship name="owned" inverse="ownedBy">
+			<reference subject="Organization" object="PointOfInterest"/>
+			<reference subject="Person" object="PointOfInterest"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="packagedWith" inverse="hadInPackage">
+			<reference subject="Software" object="Document"/>
+		</relationship>
+		<relationship name="partOf" inverse="hasPart">
+			<reference subject="Category" object="Category"/>
+			<reference subject="Category" object="Taxonomy"/>
+			<reference subject="Document" object="Edition"/>
+			<reference subject="Edition" object="Edition"/>
+			<reference subject="Item" object="Artifact"/>
+			<reference subject="Item" object="Document"/>
+			<reference subject="TemporalSpecification" object="TemporalSpecification"/>
+			<attribute name="startDate" mandatory="true" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="references" inverse="referencedBy"> <!-- dc -->
+			<reference subject="Edition" object="Document"/>
+			<reference subject="Edition" object="Edition"/>
+			<reference subject="Edition" object="IntellectualWork"/>
+			<reference subject="Edition" object="Item"/>
+			<reference subject="IntellectualWork" object="Document"/>
+			<reference subject="IntellectualWork" object="Edition"/>
+			<reference subject="IntellectualWork" object="IntellectualWork"/>
+			<reference subject="IntellectualWork" object="Item"/>
+		</relationship>
+		<relationship name="relevantFor" inverse="pertains"> <!-- include audience, educationLevel, mediator (aggiungere attributo che specifichi?) -->	
+			<reference subject="Category" object="Collection"/>
+			<reference subject="Category" object="PointOfInterest"/>
+			<reference subject="IntellectualWork" object="Category"/>
+			<reference subject="Person" object="PointOfInterest"/>
+			<reference subject="PointOfInterest" object="Category"/>
+			<attribute name="role" mandatory="true" datatype="string"/>
+		</relationship>
+		<relationship name="requires" inverse="requiredBy">
+			<reference subject="IntellectualWork" object="IntellectualWork"/>
+		</relationship>
+		<relationship name="updated" inverse="updatingOf">
+			<reference subject="Artifact" object="TemporalSpecification"/>
+			<reference subject="Document" object="TemporalSpecification"/>
+			<reference subject="Edition" object="TemporalSpecification"/>
+			<reference subject="IntellectualWork" object="TemporalSpecification"/>
+			<reference subject="Item" object="TemporalSpecification"/>
+		</relationship>
+		<relationship name="unavailable" inverse="unavailabilityOf">
+			<reference subject="Artifact" object="TemporalSpecification"/>
+			<reference subject="Document" object="TemporalSpecification"/>
+			<reference subject="Edition" object="TemporalSpecification"/>
+			<reference subject="IntellectualWork" object="TemporalSpecification"/>
+			<reference subject="Item" object="TemporalSpecification"/>
+		</relationship>
+		<relationship name="used" inverse="usedBy">
+			<reference subject="Expression" object="Language"/>
+			<reference subject="MusicalWork" object="Category"/> <!-- MusicalInstrument -->
+		</relationship>
+		<relationship name="valid" inverse="validityOf"> <!-- dc -->
+			<reference subject="Artifact" object="TemporalSpecification"/>
+			<reference subject="Document" object="TemporalSpecification"/>
+			<reference subject="Edition" object="TemporalSpecification"/>
+			<reference subject="IntellectualWork" object="TemporalSpecification"/>
+			<reference subject="Item" object="TemporalSpecification"/>
+		</relationship>
+		<relationship name="wasIn" inverse="hosted">
+			<reference subject="Organization" object="Place"/>
+			<reference subject="Document" object="Document"/>
+			<reference subject="Document" object="Event"/>
+			<reference subject="Document" object="Place"/>
+			<reference subject="Event" object="Place"/>
+			<reference subject="Item" object="Place"/>
+			<reference subject="Person" object="Collection"/>
+			<reference subject="Person" object="Organization"/>
+			<reference subject="Person" object="Place"/>
+			<reference subject="PointOfInterest" object="Place"/>
+			<reference subject="Place" object="Place"/>
+			<attribute name="reason" mandatory="false" datatype="string"/>
+			<attribute name="address" mandatory="false" datatype="string"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+	</relationships>
+</domain>

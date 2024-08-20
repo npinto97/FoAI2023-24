@@ -1,0 +1,515 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE domain SYSTEM "graphbrain.dtd"> -->
+<domain name="software_pinto" author="nicolaspinto" version="1">
+	<imports>
+		<import schema="\Users\Ningo\Desktop\GraphBRAINAPI\src\graphs\general" />
+		<import schema="\Users\Ningo\Desktop\GraphBRAINAPI\src\graphs\retrocomputing" />
+	</imports>
+	<user-types>
+		<type name="developmentStatus" datatype="select">
+			<value name="ToDo"/>
+			<value name="InProcess"/>
+			<value name="ToVerify"/>
+			<value name="Done"/>
+			<value name="Deprecated"/>
+			<value name="Retired"/>
+			<value name="Alpha"/>
+			<value name="Beta"/>
+			<value name="Planning"/>
+			<value name="Prototyping"/>
+		</type>
+		<type name="approvalStatus" datatype="select">
+			<value name="Pending"/>
+			<value name="InReview"/>
+			<value name="Approved"/>
+			<value name="Rejected"/>
+			<value name="Submitted"/>
+			<value name="Deferred"/>
+			<value name="Cancelled"/>
+			<value name="Expired"/>
+		</type>
+	</user-types>
+	<entities>
+		<entity name="IntellectualWork" description="The result of an intellectual activity">
+			<entity name="ProgrammingLanguage">
+				<attribute name="paradigm" mandatory="false" datatype="string"/>
+				<attribute name="standardization" mandatory="false" datatype="string"/>
+			</entity>
+		</entity>
+		<entity name="Agent">
+			<entity name="Person">
+				<attribute name="socialSecurityNumber" mandatory="false" display="true" datatype="string"/>
+				<attribute name="email" mandatory="false" datatype= "string"/>
+				<attribute name="biography" mandatory="false" display="true" datatype="string"/>
+				<attribute name="socialMediaProfile" mandatory="false" datatype= "string"/>
+				<entity name="Speaker">
+					<attribute name="speechTopic" mandatory="true" datatype="string"/>
+					<attribute name="speechLanguage" mandatory="true" datatype="string"/>
+				</entity>
+			</entity>
+			<entity name="Stakeholder">
+				<attribute name="stakeholderId" mandatory="true" datatype="string"/>
+				<attribute name="contactInformation" mandatory="true" datatype="string"/>
+				<attribute name="availability" mandatory="true" datatype="string"/>
+				<entity name="IndividualStakeholder">
+					<attribute name="skills" mandatory="true" datatype="string"/>
+					<attribute name="experience" mandatory="true" datatype="string"/>
+					<attribute name="internal" mandatory="true" datatype="boolean"/>
+					<entity name="Investor" description="Stakeholder that commits money to a venture with the expectation of generating a profit or some other form of benefit">
+						<attribute name="investmentType" mandatory="true" datatype="string"/>
+						<attribute name="returnInvestment" mandatory="true" datatype="string"/>
+					</entity>
+					<entity name="Vendor" description="Stakeholder that provides goods or services that are essential for the development, deployment, or maintenance of the software"/>
+					<entity name="ExecutiveSponsor" description="Stakeholder that acts as a champion for the project within the organization, providing various levels of support and guidance"/>
+					<entity name="RequirementsReviewer" description="Stakeholder responsible for conducting reviews in requirements artifacts"/>
+					<entity name="RequirementsStakeholder" description="Stakeholder that provides needs and expectations for the product">
+						<entity name="Customer" description="Stakeholder that purchases the software or pays for its development. They may or may not be the end users themselves">
+							<attribute name="serviceNeeded" mandatory="true" datatype="string"/>
+						</entity>
+						<entity name="EndUser" description="Stakeholder who will ultimately interact with and use the software on a regular basis"/>
+					</entity>
+					<entity name="RequirementsEngineer" description="Stakeholder responsible for conducting the requirements development activities"/>
+					<entity name="Programmer" description="Stakeholder with programming skills responsible for producing and documenting the software code"/>
+					<entity name="CodeReviewer" description="Stakeholder responsible for reviewing the code according to the requirements document and design document"/>
+				</entity>
+				<entity name="TeamStakeholder"/>
+			</entity>
+		</entity>
+		<entity name="Artifact" description="The tangible (or intangible?) outcome of a human activity">
+			<entity name="Software" description="One or more computer programs together with any accompanying auxiliary items, such as documentation, delivered under a single name, ready for use">
+				<attribute name="license" mandatory="false" datatype="string"/>
+				<attribute name="developmentStatus" mandatory="false" datatype="developmentStatus"/>
+				<attribute name="price" mandatory="false" datatype="real"/>
+				<attribute name="softwareType" mandatory="false" datatype="string"/>
+				<attribute name="softwareCategory" mandatory="false" datatype="string"/>
+				<entity name="Development">
+					<entity name="TextEditor"/>
+					<entity name="DebuggingTool"/>
+					<entity name="VersionControlSystem"/>
+				</entity>
+				<entity name="Educational">
+					<attribute name="subjectArea" mandatory="false" datatype="string"/>
+					<attribute name="gradeLevel" mandatory="false" datatype="string"/>
+					<attribute name="learningObjective" mandatory="false" datatype="string"/>
+					<entity name="LearningManagementSystem"/>
+					<entity name="Courseware"/>
+					<entity name="SimulationSoftware"/>
+					<entity name="InteractiveWhiteboardSoftware"/>
+					<entity name="EducationalGame"/>
+					<entity name="LanguageLearningSoftware"/>
+				</entity>
+				<entity name="OfficeAutomation">
+					<entity name="SchedulingTool"/>
+				</entity>
+				<entity name="OperatingSystem">
+					<attribute name="architecture" mandatory="false" datatype="string"/>
+				</entity>
+				<entity name="Videogame">
+					<entity name="Action"/>
+					<entity name="RolePlayingGame"/>
+					<entity name="Strategy"/>
+					<entity name="Fighting"/>
+					<entity name="Platformer"/>
+					<entity name="Horror"/>
+				</entity>
+			</entity>
+			<entity name="IndustrialWork">
+				<entity name="Device">
+					<entity name="Server">
+						<attribute name="hostname" mandatory="false" datatype="string"/>
+						<attribute name="ipAddress" mandatory="false" datatype="string"/>
+						<attribute name="storageCapacity" mandatory="false" datatype="string"/>
+					</entity>
+				</entity>
+			</entity>
+			<entity name="SoftwareComponent" description="Piece of software, produced during the software process, not considered a complete Software Product, but an intermediary result">
+				<attribute name="acronym" mandatory="false" datatype="string"/>
+				<attribute name="license" mandatory="false" datatype="string"/>
+				<attribute name="version" mandatory="false" datatype="string"/>
+				<attribute name="developmentStatus" mandatory="false" datatype="developmentStatus"/>
+				<attribute name="endDate" mandatory="false" datatype="dat     e"/>
+				<entity name="SoftwareSystem"/>
+				<entity name="Program"/>
+				<entity name="Code">
+					<entity name="SourceCode" description="A well-formed sequence of computer instructions and data definitions expressed in a programming language, in a form suitable for input to an assembler, compiler, or other translator.">
+						<attribute name="linesOfCode" mandatory="false" datatype="integer"/>
+					</entity>
+					<entity name="MachineCode" description="Computer instructions and data definitions expressed in a form output by an assembler, compiler, or other translator, which can be recognized by the processing unit of a computer machine">
+						<attribute name="executionEnvironment" mandatory="false" datatype="string"/>
+					</entity>
+				</entity>
+			</entity>
+			<entity name="InformationItem" description="Relevant information for human use">
+				<attribute name="language" mandatory="false" datatype="string"/>
+				<attribute name="body" mandatory="false" datatype="string"/>
+				<attribute name="edition" mandatory="false" datatype="string"/>
+				<attribute name="creationDate" mandatory="false" datatype="date"/>
+				<entity name="Documentation">
+					<attribute name="version" mandatory="false" datatype="string"/>
+					<attribute name="license" mandatory="false" datatype="string"/>
+					<attribute name="owner" mandatory="false" datatype="string"/>
+					<attribute name="lastUpdateDate" mandatory="false" datatype="date"/>
+					<entity name="ComponentDescription" description="Detailed information about a software component within a system">
+						<attribute name="DevelopmentStatus" mandatory="false" datatype="developmentStatus"/>
+					</entity>
+					<entity name="Pseudocode" description="Informal way of describing the logic of a computer program">
+						<attribute name="TimeComplexvityValue" mandatory="false" datatype="string"/>
+						<attribute name="SpaceComplexfityValue" mandatory="false" datatype="string"/>
+					</entity>
+					<entity name="IntentDocumentation">
+						<attribute name="ID" mandatory="false" datatype="string"/>
+						<attribute name="priority" mandatory="false" datatype="string"/>
+						<attribute name="developmentStatus" mandatory="false" datatype="developmentStatus"/>
+						<attribute name="approvalStatus" mandatory="false" datatype="approvalStatus"/>
+						<entity name="SpecificationDocument">
+							<attribute name="scope" mandatory="false" datatype="string"/>
+							<attribute name="audience" mandatory="false" datatype="string"/>
+							<entity name="SystemSpecification"/>
+							<entity name="ProgramSpecification"/>
+						</entity>
+						<entity name="BugReport" description="Document that captures information about an identified issue or malfunction within a software system">
+							<attribute name="reportDate" mandatory="false" datatype="date"/>
+							<attribute name="severity" mandatory="false" datatype="select">
+								<value name="Critical"/>
+								<value name="High"/>
+								<value name="Medium"/>
+								<value name="Low"/>
+								<value name="Trivial"/>
+							</attribute>
+							<attribute name="status" mandatory="false" datatype="string"/>
+							<attribute name="reporter" mandatory="false" datatype="string"/>
+						</entity>
+						<entity name="UserStory" description="Document that captures a specific feature or functionality of a software system from the end user's perspective">
+							<attribute name="storyPoints" mandatory="false" datatype="string"/>
+							<attribute name="acceptanceCriteria" mandatory="false" datatype="string"/>
+							<attribute name="sprint" mandatory="false" datatype="string"/>
+						</entity>
+						<entity name="UseCase" description="Document that captures a collection of user stories for a software project">
+							<attribute name="actor" mandatory="false" datatype="string"/>
+							<attribute name="trigger" mandatory="false" datatype="string"/>
+							<attribute name="precondition" mandatory="false" datatype="string"/>
+							<attribute name="postcondition" mandatory="false" datatype="string"/>
+							<attribute name="mainFlow" mandatory="false" datatype="string"/>
+							<attribute name="alternateFlow" mandatory="false" datatype="string"/>
+							<attribute name="exceptionFlow" mandatory="false" datatype="string"/>
+							<attribute name="frequency" mandatory="false" datatype="string"/>
+						</entity>
+						<entity name="TestCase" description="Document containing the input data, expected results, steps and general conditions for testing some situation regarding a code">
+							<attribute name="exceptedResult" mandatory="false" datatype="string"/>
+							<attribute name="actualResult" mandatory="false" datatype="string"/>
+							<attribute name="testData" mandatory="false" datatype="string"/>
+							<attribute name="testEnvironment" mandatory="false" datatype="string"/>
+							<attribute name="testSetup" mandatory="false" datatype="string"/>
+							<attribute name="testPassCriteria" mandatory="false" datatype="string"/>
+						</entity>
+						<entity name="AgreementEmail" description="Document that serves as a formal agreement reached between two or more stakeholders">
+							<attribute name="subject" mandatory="false" datatype="string"/>
+							<attribute name="recipient" mandatory="false" datatype="string"/>
+							<attribute name="attachments" mandatory="false" datatype="string"/>
+						</entity>
+						<entity name="DesignDocument" description="Comprehensive document that outlines the technical plan for building a software project"/>
+						<entity name="CodeReviewReport" description="Document pointing out problems identified in the code during review activities"/>
+						<entity name="RequirementsDocument" description="Document reporting requirements and related information"/>
+						<entity name="RequirementsEvaluationDocument" description="Document pointing out problems identified in documented requirements and conceptual models registered in a requirements document"/>
+						<entity name="RequirementsAgreement" description="Represents the agreement achieved by the stakeholders, regarding the requirements for the product"/>
+					</entity>
+					<entity name="Intent" description="Captures what the project aims to achieve, reflecting the desires and expectations of key stakeholders"/>
+				</entity>
+				<entity name="AdvertisingMaterial">
+					<attribute name="medium" mandatory="false" datatype="string"/>
+					<attribute name="targetAudience" mandatory="false" datatype="string"/>
+					<attribute name="distributionChannel" mandatory="false" datatype="string"/>
+					<attribute name="approvalStatus" mandatory="false" datatype="approvalStatus"/>
+				</entity>
+				<entity name="SlideDeck">
+					<attribute name="targetAudience" mandatory="false" datatype="string"/>
+					<attribute name="duration" mandatory="false" datatype="string"/>
+					<attribute name="version" mandatory="false" datatype="string"/>
+					<attribute name="distributionChannels" mandatory="false" datatype="string"/>
+				</entity>
+				<entity name="Slide">
+					<attribute name="pageNumber" mandatory="false" datatype="string"/>
+				</entity>
+				<entity name="RequirementArtifact" description="Information Item describing a requirement"/>
+			</entity>
+			<entity name="Model" description="A representation (abstraction) of a process or system from a particular perspective">
+				<entity name="ConceptualModel" description="Model describing the product requirements under different and relevant views"/>
+			</entity>
+		</entity>
+		<entity name="DigitalItem" description="Any item that exists in a digital form">
+			<entity name="FileSystemItem" description="Any item within a file system">
+				<entity name="Directory" description="A type of file system entity that can contain other files or directories">
+					<attribute name="name" mandatory="false" datatype="string"/>
+					<attribute name="path" mandatory="false" datatype="string"/>
+					<attribute name="author" mandatory="false" datatype="string"/>
+					<attribute name="creationDate" mandatory="false" datatype="date"/>
+					<attribute name="lastUpdateDate" mandatory="false" datatype="date"/>
+					<attribute name="lastAccessDate" mandatory="false" datatype="date"/>
+				</entity>
+			</entity>
+		</entity>
+		<entity name="PerformedActivity" description="Action performed by a Stakeholder">
+			<entity name="PerformedSimpleActivity" description="Performed Activity that is not further decomposed into other Performed Activities">
+				<entity name="CodeDevelopment" description="Activity executed for developing the software code"/>
+				<entity name="CodeDocumentation" description="Activity executed for documenting the software Code with useful information"/>
+				<entity name="CodeReview" description="Activity executed for reviewing the software code to identify errors and non-conformances"/>
+			</entity>
+			<entity name="PerformedCompositeActivity" description="Performed Activity composed of other Performed Activities">
+				<entity name="RequirementsElicitation" description="Identification of requirements from the stakeholders and other sources, and documenting them"/>
+				<entity name="ConceptualModeling" description="Activity executed for modeling requirements, producing conceptual models"/>
+				<entity name="RequirementsDocumentation" description="Activity executed for recording and management of requirements during and after the project"/>
+				<entity name="RequirementsVerification" description="Activity executed for evaluating the requirements and for recording the identified problems"/>
+				<entity name="RequirementsNegotiation" description="Activity executed to solve problems in the requirements and to reach an agreement on the set of requirements to be considered in the project"/>
+				<entity name="Coding"/>
+			</entity>
+		</entity>
+		<entity name="Requirement" description="Goal to be achieved, representing a condition or capacity needed for the system users for solving a problem">
+			<entity name="FunctionalRequirement" description="Requirement defining a function to be available in the product being built"/>
+			<entity name="NonFunctionalRequirement" description="Requirement defining criteria or capabilities for the product"/>
+		</entity>
+	</entities>
+	<relationships>
+		<!--<relationship name="acquired" inverse="acquiredBy">
+		</relationship>-->
+		<relationship name="aliasOf" inverse="aliasOf">
+			<reference subject="Person" object="Stakeholder"/>
+		</relationship>
+		<relationship name="assignedTo" inverse="assignedBy">
+			<reference subject="BugReport" object="Stakeholder"/>
+			<attribute name="assignmentDate" mandatory="false" datatype="date"/>
+			<attribute name="priority" mandatory="false" datatype="string"/>
+			<attribute name="status" mandatory="false" datatype="string"/>
+		</relationship>
+		<relationship name="belongsTo" inverse="hasMember">
+			<reference subject="Stakeholder" object="TeamStakeholder"/>
+			<reference subject="Slide" object="SlideDeck"/>
+			<reference subject="IntentDocumentation" object="Intent"/>
+			<reference subject="RequirementArtifact" object="RequirementsDocument"/>
+			<attribute name="number" mandatory="false" datatype="string"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="clones" inverse="clonedBy">
+			<reference subject="SoftwareComponent" object="SoftwareComponent"/>
+		</relationship>
+		<relationship name="compatibleWith" inverse="compatibleWith">
+			<reference subject="SoftwareComponent" object="SoftwareComponent"/>
+		</relationship>
+		<relationship name="follows" inverse="followedBy">
+			<reference subject="Software" object="Software"/>
+		</relationship>
+		<relationship name="distributes" inverse="distributedBy">
+			<reference subject="Software" object="Software"/>
+		</relationship>
+		<relationship name="isEdition" inverse="hasEdition">
+			<reference subject="Software" object="Software"/>
+		</relationship>
+		<relationship name="partOf" inverse="hasPart">
+			<reference subject="Software" object="Software"/>
+			<reference subject="Software" object="SoftwareSystem"/>
+			<reference subject="SoftwareComponents" object="Software"/>
+			<reference subject="Program" object="SoftwareSystem"/>
+			<reference subject="Code" object="Program"/>
+		</relationship>
+		<relationship name="concerns" inverse="citedIn">
+			<reference subject="InformationItem" object="Collection"/>
+			<reference subject="InformationItem" object="Component"/>
+			<reference subject="InformationItem" object="Device"/>
+			<reference subject="InformationItem" object="System"/>
+			<reference subject="InformationItem" object="Software"/>
+			<reference subject="ComponentDescription" object="ComponentDescription"/>
+			<reference subject="Pseudocode" object="Pseudocode"/>
+			<reference subject="SpecificationDocument" object="SpecificationDocument"/>
+			<reference subject="UserStory" object="UserStory"/>
+			<reference subject="BugReport" object="BugReport"/>
+			<reference subject="TestCase" object="TestCase"/>
+			<attribute name="position" mandatory="false" datatype="string"/>
+		</relationship>
+		<relationship name="creates" inverse="createdBy">
+			<reference subject="CodeDevelopment" object="Code"/>
+			<reference subject="ConceptualModeling" object="ConceptualModel"/>
+			<reference subject="RequirementsElicitation" object="RequirementArtifact"/>
+			<reference subject="RequirementsDocument" object="RequirementsDocument"/>
+			<reference subject="RequirementsVerification" object="RequirementsEvaluationDocument"/>
+			<reference subject="RequirementsNegotiation" object="RequirementsAgreement"/>
+			<reference subject="CodeReview" object="CodeReviewReport"/>
+			<reference subject="PerformedActivity" object="Artifact"/>
+			<attribute name="creationDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="dependsOn" inverse="dependencyOf">
+			<reference subject="PerformedActivity" object="PerformedActivity"/>
+		</relationship>
+		<relationship name="derivedFrom" inverse="derives">
+			<reference subject="TestCase" object="UseCase"/>
+		</relationship>
+		<relationship name="describes" inverse="describedBy">
+			<reference subject="RequirementArtifact" object="Requirement"/>
+			<reference subject="RequirementsDocument" object="ConceptualModel"/>
+		</relationship>
+		<relationship name="developed" inverse="developedBy">
+			<reference subject="Software" object="Stakeholder"/>
+		</relationship>
+		<!--
+		<relationship name="developed" inverse="developedBy">
+			<reference subject="Person" object="Component"/>
+			<reference subject="Person" object="Device"/>
+			<reference subject="Person" object="Fix"/>
+			<reference subject="Person" object="Collection"/>
+			<reference subject="Person" object="Software"/>
+			<reference subject="Person" object="System"/>
+			<attribute name="role" mandatory="false" datatype="string"/>
+			<attribute name="order" mandatory="false" datatype="integer"/>
+		</relationship>
+		-->
+		<!--
+		<relationship name="evaluated" inverse="evaluatedBy">
+			<reference subject="Person" object="Component"/>
+			<reference subject="Person" object="Device"/>
+			<reference subject="Person" object="Item"/>
+			<reference subject="Person" object="Package"/>
+			<reference subject="Person" object="Software"/>
+			<reference subject="Person" object="System"/>
+			<attribute name="value" mandatory="true" datatype="real"/>
+			<attribute name="type" mandatory="true" datatype="select">
+				<value name="Opinion"/>
+				<value name="Purchase"/>
+			</attribute>
+			<attribute name="evaluationDate" mandatory="false" datatype="date"/>
+		</relationship>
+		-->
+		<relationship name="executableOn" inverse="executes">
+			<reference subject="Software" object="OperatingSystem"/>
+		</relationship>
+		<relationship name="expresses" inverse="expressedBy">
+			<reference subject="Stakeholder" object="Intent"/>
+			<attribute name="expressionDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="evolves" inverse="evolvedBy">
+			<reference subject="SoftwareComponent" object="SoftwareComponent"/>
+		</relationship>
+		<relationship name="formalizes" inverse="formalizedBy">
+			<reference subject="Requirement" object="Intent"/>
+		</relationship>
+		<relationship name="forwardedTo" inverse="forwardedBy">
+			<reference subject="AgreementEmail" object="AgreementEmail"/>
+			<attribute name="forwardingDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="generates" inverse="generatedFrom">
+			<reference subject="SourceCode" object="MachineCode"/>
+		</relationship>
+		<!--
+		<relationship name="got" inverse="givenTo">
+			<reference subject="Organization" object="Award"/>
+			<reference subject="Document" object="Award"/>
+			<reference subject="Event" object="Award"/>
+			<reference subject="IntellectualWork" object="Award"/>
+			<reference subject="Person" object="Award"/>
+			<reference subject="Place" object="Award"/>
+			<reference subject="Software" object="Award"/>
+			<attribute name="date" mandatory="false" datatype="date"/>
+			<attribute name="mark" mandatory="false" datatype="string"/>
+			<attribute name="rank" mandatory="false" datatype="integer"/>
+		</relationship>
+		-->
+		<relationship name="implements" inverse="implementedBy">
+			<reference subject="SoftwareSystem" object="SystemSpecification"/>
+			<reference subject="Program" object="ProgramSpecification"/>
+			<reference subject="Code" object="Algorithm"/>
+		</relationship>
+		<relationship name="inChargeOf" inverse="managedBy">
+			<reference subject="RequirementsReviewer" object="RequirementsNegotiation"/>
+			<reference subject="Programmer" object="Coding"/>
+			<reference subject="CodeReviewer" object="CodeReview"/>
+			<reference subject="RequirementsEngineer" object="RequirementsDocumentation"/>
+			<reference subject="RequirementsEngineer" object="ConceptualModeling"/>
+			<reference subject="RequirementsEngineer" object="RequirementsElicitation"/>
+			<reference subject="Stakeholder" object="PerformedActivity"/>
+			<reference subject="Stakeholder" object="Artifact"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="inDirectory" inverse="contains">
+			<reference subject="Software" object="Directory"/>
+			<reference subject="InformationItem" object="Directory"/>
+			<attribute name="addedDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="installedIn" inverse="hosts">
+			<reference subject="Software" object="Server"/>
+			<attribute name="installationDate" mandatory="false" datatype="date"/>
+			<attribute name="installationPath" mandatory="false" datatype="string"/>
+		</relationship>
+		<relationship name="instanceOf" inverse="hasInstance">
+			<reference subject="SoftwareComponent" object="IntellectualWork"/>
+		</relationship>
+		<relationship name="interactedWith" inverse="interactedWith">
+			<reference subject="Stakeholder" object="Device"/>
+			<reference subject="Stakeholder" object="Software"/>
+			<attribute name="role" mandatory="false" datatype="string"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="isA" inverse="kindOf">
+			<reference subject="SoftwareComponent" object="SoftwareComponent"/>
+		</relationship>
+		<relationship name="mayReplace" inverse="mayBeReplacedBy">
+			<reference subject="SoftwareComponent" object="SoftwareComponent"/>
+		</relationship>
+		<!--
+		<relationship name="owned" inverse="ownedBy">
+			<reference subject="Organization" object="Device"/>
+			<reference subject="Organization" object="Item"/>
+			<reference subject="Person" object="Component"/>
+			<reference subject="Person" object="Configuration"/>
+			<reference subject="Person" object="Device"/>
+			<reference subject="Person" object="Item"/>
+			<reference subject="Person" object="Package"/>
+			<reference subject="Person" object="Software"/>
+			<attribute name="quantity" mandatory="false" datatype="integer"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+			<attribute name="public" mandatory="false" datatype="boolean"/>
+		</relationship>-->
+		<relationship name="packagedWith" inverse="hadInPackage">
+			<reference subject="SoftwareComponent" object="InformationItem"/>
+		</relationship>
+		<relationship name="participatesIn" inverse="involves">
+			<reference subject="Stakeholder" object="PerformedActivity"/>
+			<reference subject="RequirementsStakeholder" object="RequirementsElicitation"/>
+			<reference subject="RequirementsStakeholder" object="RequirementsVerification"/>
+			<reference subject="RequirementsStakeholder" object="RequirementsNegotiation"/>
+			<reference subject="RequirementsEngineer" object="RequirementsVerification"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="partOf" inverse="hasPart">
+			<reference subject="PerformedActivity" object="PerformedCompositeActivity"/>
+			<reference subject="CodeDevelopment" object="Coding"/>
+			<reference subject="CodeDocumentation" object="Coding"/>
+			<attribute name="quantity" mandatory="false" datatype="integer"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="refersTo" inverse="referredBy">
+			<reference subject="SpecificationDocument" object="SpecificationDocument"/>
+		</relationship>
+		<relationship name="runnedOn" inverse="runs">
+			<reference subject="OperatingSystem" object="Server"/>
+		</relationship>
+		<relationship name="satisfies" inverse="satisfiedBy">
+			<reference subject="SystemSpecification" object="Intent"/>
+			<reference subject="ProgramSpecification" object="SystemSpecification"/>
+		</relationship>
+		<relationship name="wasIn" inverse="hosted">
+			<reference subject="Stakeholder" object="TeamStakeholder"/>
+			<reference subject="TeamStakeholder" object="Organization"/>
+			<attribute name="reason" mandatory="false" datatype="string"/>
+			<attribute name="position" mandatory="false" datatype="string"/>
+			<attribute name="startDate" mandatory="false" datatype="date"/>
+			<attribute name="endDate" mandatory="false" datatype="date"/>
+		</relationship>
+		<relationship name="writtenIn" inverse="usedBy">
+			<reference subject="SourceCode" object="ProgrammingLanguage"/>
+			<reference subject="Software" object="ProgrammingLanguage"/>
+		</relationship>
+	</relationships>
+</domain>
